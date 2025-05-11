@@ -1,0 +1,38 @@
+name: Build Marauder Arduino Bins
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Arduino CLI
+        uses: dawidd6/setup-arduino-cli@v1
+
+      - name: Install ESP32 Arduino core
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install esp32:esp32
+
+      - name: Compile & export binaries
+        run: |
+          arduino-cli compile \
+            --fqbn esp32:esp32-s3:esp32-s3-devkitc-1 \
+            --build-path build \
+            --export-binaries esp32_marauder/esp32_marauder.ino
+
+      - name: Upload .bin artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: marauder-arduino-bins
+          path: |
+            build/bootloader.bin
+            build/partition-table.bin
+            build/esp32_marauder.ino.bin
