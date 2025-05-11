@@ -42,6 +42,10 @@ jobs:
             "MicroNMEA" \
             "espsoftwareserial"
 
+    - name: Debug: Search for invalid FQBN
+       run: grep -r 'esp32:esp32-s3' .
+
+
       - name: Compile & export binaries
         run: |
           arduino-cli compile \
