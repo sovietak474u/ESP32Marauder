@@ -41,8 +41,9 @@ jobs:
             "MicroNMEA" \
             "espsoftwareserial"
 
+          # Replace ESPAsyncWebServer with the correct fork to avoid LinkedList conflict
           rm -rf ~/Arduino/libraries/ESPAsyncWebServer
-          git clone https://github.com/kokoalberti/ESPAsyncWebServer.git ~/Arduino/libraries/ESPAsyncWebServer
+          git clone https://github.com/justcallmekoko/ESPAsyncWebServer.git ~/Arduino/libraries/ESPAsyncWebServer
 
       - name: Compile & export binaries
         run: |
