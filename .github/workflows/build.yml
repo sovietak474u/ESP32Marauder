@@ -24,6 +24,9 @@ jobs:
           arduino-cli core update-index
           arduino-cli core install esp32:esp32
 
+      - name: Install LinkedList library
+        run: arduino-cli lib install "LinkedList"
+
       - name: Compile & export binaries
         run: |
           arduino-cli compile \
