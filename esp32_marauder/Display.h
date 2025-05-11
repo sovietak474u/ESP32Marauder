@@ -10,7 +10,6 @@
 #include <FS.h>
 #include <functional>
 #include <JPEGDecoder.h>
-#include <LinkedList.h>
 #include <SPI.h>
 #include <lvgl.h>
 #include <Ticker.h>
