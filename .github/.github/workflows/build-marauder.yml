@@ -1,0 +1,33 @@
+name: Build Marauder-Elecrow Bins
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install ESP-IDF v5.2
+        uses: espressif/install-esp-idf-action@v1
+        with:
+          esp_idf_version: v5.2
+
+      - name: Build firmware
+        run: |
+          idf.py fullclean
+          idf.py build
+
+      - name: Upload .bin artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: marauder-elecrow-bins
+          path: |
+            build/bootloader/bootloader.bin
+            build/partition_table/partition-table.bin
+            build/ghost_esp.bin
