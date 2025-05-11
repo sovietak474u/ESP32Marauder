@@ -21,7 +21,7 @@ jobs:
           arduino-cli core update-index
           arduino-cli core install esp32:esp32
 
-      - name: Install required libraries
+      - name: Install Required Libraries
         run: |
           arduino-cli lib install "LovyanGFX"
           arduino-cli lib install "LinkedList"
@@ -35,7 +35,7 @@ jobs:
           arduino-cli lib install "MicroNMEA"
           arduino-cli lib install "EspSoftwareSerial"
 
-      - name: Compile
+      - name: Compile Sketch
         run: |
           arduino-cli compile \
             --fqbn esp32:esp32:esp32s3 \
@@ -43,7 +43,7 @@ jobs:
             --export-binaries \
             esp32_marauder/esp32_marauder.ino
 
-      - name: Upload Artifacts
+      - name: Upload Binaries
         uses: actions/upload-artifact@v3
         with:
           name: firmware-bin
