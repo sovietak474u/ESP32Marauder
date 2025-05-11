@@ -44,7 +44,7 @@ jobs:
             esp32_marauder/esp32_marauder.ino
 
       - name: Upload Binaries
-        uses: actions/upload-artifact@v3@9c833efb073e58bc02c983dfc9c6aa10c0a3702d
+        uses: actions/upload-artifact@9c833efb073e58bc02c983dfc9c6aa10c0a3702d
         with:
           name: firmware-bin
           path: build/*.bin
