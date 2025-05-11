@@ -39,10 +39,8 @@ jobs:
             "Adafruit TSC2007" \
             "Adafruit TouchScreen" \
             "Adafruit MAX1704X" \
-            "MicroNMEA"
-
-      - name: Show available boards
-        run: arduino-cli board listall
+            "MicroNMEA" \
+            "espsoftwareserial"
 
       - name: Compile & export binaries
         run: |
