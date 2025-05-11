@@ -49,7 +49,8 @@ jobs:
       - name: Compile & export binaries
         run: |
           arduino-cli compile \
-            --fqbn esp32:esp32:esp32s3 \
+            --fqbn esp32:esp32:esp32s3
+
             --build-path build \
             --export-binaries esp32_marauder/esp32_marauder.ino
 
