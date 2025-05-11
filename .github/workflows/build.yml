@@ -24,8 +24,19 @@ jobs:
           arduino-cli core update-index
           arduino-cli core install esp32:esp32
 
-      - name: Install LinkedList library
-        run: arduino-cli lib install "LinkedList"
+      - name: Install all required libraries
+        run: |
+          arduino-cli lib install \
+            "LinkedList" \
+            "ESPAsyncWebServer" \
+            "AsyncTCP" \
+            "Adafruit NeoPixel" \
+            "ArduinoJson" \
+            "Adafruit GFX Library" \
+            "Adafruit ILI9341" \
+            "DNSServer" \
+            "SPIFFS" \
+            "WiFi"
 
       - name: Compile & export binaries
         run: |
