@@ -38,7 +38,8 @@ jobs:
             "Adafruit STMPE610" \
             "Adafruit TSC2007" \
             "Adafruit TouchScreen" \
-            "Adafruit MAX1704X"
+            "Adafruit MAX1704X" \
+            "MicroNMEA"
 
       - name: Show available boards
         run: arduino-cli board listall
