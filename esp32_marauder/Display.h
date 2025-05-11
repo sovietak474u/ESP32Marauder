@@ -4,6 +4,8 @@
 #define Display_h
 
 #include "configs.h"
+#include "lib/LGFX_ESP32_ELECROW/LGFX_ESP32_ELECROW.h"
+
 
 #ifdef HAS_SCREEN
 
