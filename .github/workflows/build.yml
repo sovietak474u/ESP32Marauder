@@ -39,10 +39,13 @@ jobs:
             "Adafruit TSC2007" \
             "Adafruit TouchScreen"
 
+      - name: Show available boards
+        run: arduino-cli board listall
+
       - name: Compile & export binaries
         run: |
           arduino-cli compile \
-            --fqbn esp32:esp32:esp32s3-devkitc-1 \
+            --fqbn esp32:esp32:esp32s3 \
             --build-path build \
             --export-binaries esp32_marauder/esp32_marauder.ino
 
