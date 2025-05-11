@@ -6,6 +6,7 @@ https://www.online-utility.org/image/convert/to/XBM
 */
 
 #include "configs.h"
+#include "LGFX_ESP32_ELECROW.h"  // ✅ ADDED THIS LINE
 
 #ifndef HAS_SCREEN
   #define MenuFunctions_h
@@ -155,7 +156,7 @@ void setup()
     axp192_obj.begin();
   #endif
 
-  #if defined(MARAUDER_M5STICKCP2) // Prevent StickCP2 from turning off when disconnect USB cable
+  #if defined(MARAUDER_M5STICKCP2)
     pinMode(POWER_HOLD_PIN, OUTPUT);
     digitalWrite(POWER_HOLD_PIN, HIGH);
   #endif
@@ -169,19 +170,15 @@ void setup()
     pinMode(BATTERY_PIN, OUTPUT);
     pinMode(CHARGING_PIN, INPUT);
   #endif
-  
-  // Preset SPI CS pins to avoid bus conflicts
+
   #ifdef HAS_SCREEN
     digitalWrite(TFT_CS, HIGH);
   #endif
-  
+
   #ifdef HAS_SD
     pinMode(SD_CS, OUTPUT);
-
     delay(10);
-  
     digitalWrite(SD_CS, HIGH);
-
     delay(10);
   #endif
 
@@ -207,67 +204,31 @@ void setup()
 
   backlightOff();
 
-  // Draw the title screen
-  /*
-  #ifdef HAS_SCREEN
-    #ifndef MARAUDER_MINI
-      display_obj.drawJpeg("/marauder3L.jpg", 0 , 0);     // 240 x 320 image
-    #else
-      display_obj.drawJpeg("/marauder3L.jpg", 0, 0);
-    #endif
-  #endif
-  */
-
   #ifdef HAS_SCREEN
     display_obj.tft.drawCentreString("ESP32 Marauder", TFT_WIDTH/2, TFT_HEIGHT * 0.33, 1);
     display_obj.tft.drawCentreString("JustCallMeKoko", TFT_WIDTH/2, TFT_HEIGHT * 0.5, 1);
     display_obj.tft.drawCentreString(display_obj.version_number, TFT_WIDTH/2, TFT_HEIGHT * 0.66, 1);
   #endif
 
-
-  backlightOn(); // Need this
+  backlightOn();
 
   #ifdef HAS_SCREEN
-    //delay(2000);
-
-    // Do some stealth mode stuff
     #ifdef HAS_BUTTONS
       if (c_btn.justPressed()) {
         display_obj.headless_mode = true;
-
         backlightOff();
-
         Serial.println("Headless Mode enabled");
       }
     #endif
-
-    //display_obj.clearScreen();
-  
-    //display_obj.tft.setTextColor(TFT_CYAN, TFT_BLACK);
-  
-    //display_obj.tft.println(text_table0[0]);
-  
-    //delay(2000);
-  
-    //display_obj.tft.println("Marauder " + display_obj.version_number + "\n");
-  
-    //display_obj.tft.println(text_table0[1]);
   #endif
 
   settings_obj.begin();
-
   wifi_scan_obj.RunSetup();
-
-  //#ifdef HAS_SCREEN
-  //  display_obj.tft.println(F(text_table0[2]));
-  //#endif
-
   buffer_obj = Buffer();
+
   #if defined(HAS_SD)
-    // Do some SD stuff
     if(!sd_obj.initSD())
       Serial.println(F("SD Card NOT Supported"));
-
   #endif
 
   #ifdef HAS_SCREEN
@@ -280,20 +241,11 @@ void setup()
   #ifdef HAS_BATTERY
     battery_obj.RunSetup();
   #endif
-  
-  #ifdef HAS_SCREEN
-    //display_obj.tft.println(F(text_table0[5]));
-  #endif
-
-  #ifdef HAS_SCREEN
-    //display_obj.tft.println(F(text_table0[6]));
-  #endif
 
   #ifdef HAS_BATTERY
     battery_obj.battery_level = battery_obj.getBatteryLevel();
   #endif
 
-  // Do some LED stuff
   #ifdef HAS_FLIPPER_LED
     flipper_led.RunSetup();
   #elif defined(XIAO_ESP32_S3)
@@ -304,36 +256,16 @@ void setup()
     led_obj.RunSetup();
   #endif
 
-  #ifdef HAS_SCREEN
-    //display_obj.tft.println(F(text_table0[7]));
-
-    //delay(500);
-  #endif
-
   #ifdef HAS_GPS
     gps_obj.begin();
-    //#ifdef HAS_SCREEN
-      //if (gps_obj.getGpsModuleStatus())
-        //display_obj.tft.println("GPS Module connected");
-      //else
-        //display_obj.tft.println("GPS Module NOT connected");
-    //#endif
   #endif
 
   #ifdef HAS_SCREEN
-    //display_obj.tft.println(F(text_table0[8]));
-  
     display_obj.tft.setTextColor(TFT_WHITE, TFT_BLACK);
-  
-    //delay(2000);
-  #endif
-
-  #ifdef HAS_SCREEN
     menu_function_obj.RunSetup();
   #endif
 
   wifi_scan_obj.StartScan(WIFI_SCAN_OFF);
-  
   Serial.println(F("CLI Ready"));
   cli_obj.RunSetup();
 }
@@ -366,7 +298,6 @@ void loop()
     #endif
   #endif
 
-  // Update all of our objects
   cli_obj.main(currentTime);
   #ifdef HAS_SCREEN
     display_obj.main(wifi_scan_obj.currentScanMode);
@@ -376,25 +307,24 @@ void loop()
   #ifdef HAS_GPS
     gps_obj.main();
   #endif
-  
-  // Detect SD card
+
   #if defined(HAS_SD)
     sd_obj.main();
   #endif
 
-  // Save buffer to SD and/or serial
   buffer_obj.save();
 
   #ifdef HAS_BATTERY
     battery_obj.main(currentTime);
   #endif
   settings_obj.main(currentTime);
-  if (((wifi_scan_obj.currentScanMode != WIFI_PACKET_MONITOR) && (wifi_scan_obj.currentScanMode != WIFI_SCAN_EAPOL)) ||
-      (mini)) {
+
+  if (((wifi_scan_obj.currentScanMode != WIFI_PACKET_MONITOR) && (wifi_scan_obj.currentScanMode != WIFI_SCAN_EAPOL)) || (mini)) {
     #ifdef HAS_SCREEN
       menu_function_obj.main(currentTime);
     #endif
   }
+
   #ifdef HAS_FLIPPER_LED
     flipper_led.main();
   #elif defined(XIAO_ESP32_S3)
