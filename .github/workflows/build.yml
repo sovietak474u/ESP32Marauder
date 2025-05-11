@@ -37,7 +37,8 @@ jobs:
             "Adafruit SH110X" \
             "Adafruit STMPE610" \
             "Adafruit TSC2007" \
-            "Adafruit TouchScreen"
+            "Adafruit TouchScreen" \
+            "Adafruit MAX1704X"
 
       - name: Show available boards
         run: arduino-cli board listall
