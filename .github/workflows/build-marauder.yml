@@ -15,7 +15,6 @@ jobs:
 
       - name: Install Arduino CLI
         uses: arduino/setup-arduino-cli@v2
-        # pins to the latest stable Arduino CLI :contentReference[oaicite:0]{index=0}
 
       - name: Install ESP32 Arduino core
         run: |
@@ -30,8 +29,7 @@ jobs:
             --export-binaries esp32_marauder/esp32_marauder.ino
 
       - name: Upload .bin artifacts
-        uses: actions/upload-artifact@v3
-        # uses the standard upload Action :contentReference[oaicite:1]{index=1}
+        uses: actions/upload-artifact@v4
         with:
           name: marauder-arduino-bins
           path: |
