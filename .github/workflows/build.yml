@@ -34,9 +34,10 @@ jobs:
             "ArduinoJson" \
             "Adafruit GFX Library" \
             "Adafruit ILI9341" \
-            "DNSServer" \
-            "SPIFFS" \
-            "WiFi"
+            "Adafruit SH110X" \
+            "Adafruit STMPE610" \
+            "Adafruit TSC2007" \
+            "Adafruit TouchScreen"
 
       - name: Compile & export binaries
         run: |
