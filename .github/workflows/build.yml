@@ -28,7 +28,6 @@ jobs:
         run: |
           arduino-cli lib install \
             "LinkedList" \
-            "ESPAsyncWebServer" \
             "AsyncTCP" \
             "Adafruit NeoPixel" \
             "ArduinoJson" \
@@ -41,6 +40,9 @@ jobs:
             "Adafruit MAX1704X" \
             "MicroNMEA" \
             "espsoftwareserial"
+
+          rm -rf ~/Arduino/libraries/ESPAsyncWebServer
+          git clone https://github.com/kokoalberti/ESPAsyncWebServer.git ~/Arduino/libraries/ESPAsyncWebServer
 
       - name: Compile & export binaries
         run: |
